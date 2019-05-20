@@ -30,6 +30,7 @@ export default class Home extends Component {
   //   }
   // }
 
+  // 设置顶部导航栏的相关样式
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state
 
@@ -137,11 +138,7 @@ export default class Home extends Component {
           </ScrollView>
         ) : null}
 
-        {this.state.tabIndex == 1 ? (
-          <View>
-            <Category />
-          </View>
-        ) : null}
+        {this.state.tabIndex == 1 ? <Category  navigation={this.props.navigation} /> : null}
 
         {/* 底部导航栏部分 */}
         <View style={styles.footer}>
@@ -245,11 +242,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
-    height:'100%'
+    height: '100%'
   },
   scrollContainer: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 46,
     left: 0,
     right: 0,
     top: 0,
@@ -263,7 +260,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 60
+    height: 46
   },
   footerItem: {
     display: 'flex',
@@ -273,8 +270,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   tabIcon: {
-    width: 36,
-    height: 36
+    width: 30,
+    height: 30
   },
   activeTab: {
     color: 'rgb(171, 149, 109)'
