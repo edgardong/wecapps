@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { getBanner, getTheme, getProducts } from '../api'
-import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView
+} from 'react-native'
 import Swiper from '../components/swiper'
 import Products from '../components/products'
 import Category from './Category'
-import { ScrollView } from 'react-native-gesture-handler'
 
 export default class Home extends Component {
   constructor(props) {
@@ -93,55 +99,60 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.tabIndex == 0 ? (
-          <ScrollView style={styles.scrollContainer}>
-            {/* 顶部轮播图 */}
-            <View>
-              {this.state.banners.length > 0 ? (
-                <Swiper items={this.state.banners} />
-              ) : null}
-            </View>
+        {/* {this.state.tabIndex == 0 ? ( */}
+        <ScrollView
+          style={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* 顶部轮播图 */}
+          <View>
+            {this.state.banners.length > 0 ? (
+              <Swiper items={this.state.banners} />
+            ) : null}
+          </View>
 
-            {/* 精选主题区域 */}
-            <View>
-              <View style={styles.themeTitle}>
-                <Text style={styles.themeTitleText}>精选主题</Text>
-              </View>
-              <View style={styles.themeBox}>
-                {this.state.themes.map((theme, index) => (
-                  <View
+          {/* 精选主题区域 */}
+          <View>
+            <View style={styles.themeTitle}>
+              <Text style={styles.themeTitleText}>精选主题</Text>
+            </View>
+            <View style={styles.themeBox}>
+              {this.state.themes.map((theme, index) => (
+                <View
+                  key={theme.id}
+                  style={index == 2 ? styles.themeItemBig : styles.themeItem}
+                >
+                  <Image
+                    style={styles.themeImage}
+                    source={{ uri: theme.topic_img.url }}
                     key={theme.id}
-                    style={index == 2 ? styles.themeItemBig : styles.themeItem}
-                  >
-                    <Image
-                      style={styles.themeImage}
-                      source={{ uri: theme.topic_img.url }}
-                      key={theme.id}
-                    />
-                  </View>
-                ))}
-              </View>
+                  />
+                </View>
+              ))}
             </View>
+          </View>
 
-            {/* 最近新品 */}
-            <View>
-              <View style={styles.themeTitle}>
-                <Text style={styles.themeTitleText}>最近新品</Text>
-              </View>
-              {this.state.products.length > 0 ? (
-                <Products
-                  navigation={this.props.navigation}
-                  products={this.state.products}
-                />
-              ) : null}
+          {/* 最近新品 */}
+          <View>
+            <View style={styles.themeTitle}>
+              <Text style={styles.themeTitleText}>最近新品</Text>
             </View>
-          </ScrollView>
-        ) : null}
+            {this.state.products.length > 0 ? (
+              <Products
+                navigation={this.props.navigation}
+                products={this.state.products}
+              />
+            ) : null}
+          </View>
+        </ScrollView>
+        {/*  ) : null} */}
 
-        {this.state.tabIndex == 1 ? <Category  navigation={this.props.navigation} /> : null}
+        {/* {this.state.tabIndex == 1 ? (
+          <Category navigation={this.props.navigation} />
+        ) : null} */}
 
         {/* 底部导航栏部分 */}
-        <View style={styles.footer}>
+        {/* <View style={styles.footer}>
           <TouchableOpacity
             activeOpacity={0.9}
             style={styles.footerItem}
@@ -232,7 +243,7 @@ export default class Home extends Component {
               我的
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     )
   }
@@ -246,7 +257,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     position: 'absolute',
-    bottom: 46,
+    bottom: 0,
     left: 0,
     right: 0,
     top: 0,
@@ -260,7 +271,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 46
+    height: 50
   },
   footerItem: {
     display: 'flex',

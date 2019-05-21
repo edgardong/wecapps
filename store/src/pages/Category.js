@@ -55,7 +55,7 @@ export default class Category extends React.Component {
     return (
       <View style={styles.container}>
         {/* 左侧分类 */}
-        <ScrollView style={styles.leftBox}>
+        <ScrollView style={styles.leftBox} showsVerticalScrollIndicator={false}>
           {this.state.categorys.map((cate, index) => (
             <TouchableOpacity
               key={cate.id}
@@ -81,7 +81,7 @@ export default class Category extends React.Component {
           {/* 顶部大图 */}
 
           {state.categorys.length > 0 ? (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <Image
                 style={styles.rightTopImg}
                 source={{ uri: state.categorys[state.currentIndex].img.url }}
@@ -101,7 +101,7 @@ export default class Category extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 48,
+    bottom: 0,
     left: 0,
     right: 0,
     top: 0,
@@ -140,7 +140,9 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontSize: 14,
     textAlign: 'center',
-    color: 'rgb(171, 149, 109)'
+    color: 'rgb(171, 149, 109)',
+    borderLeftColor: 'rgb(171, 149, 109)',
+    borderLeftWidth: 3
   },
   rightTopImg: {
     height: 100
