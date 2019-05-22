@@ -9,6 +9,15 @@ export default class My extends Component {
     super(props)
   }
 
+  // 设置顶部导航栏的相关样式
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state
+
+    return {
+      tabBarLabel: '我的'
+    }
+  }
+
   render() {
     return <Text>我的</Text>
   }

@@ -20,6 +20,23 @@ export default class Category extends React.Component {
     }
   }
 
+  // 设置顶部导航栏的相关样式
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state
+
+    return {
+      tabBarLabel: '分类',
+      // title: params ? params.title : '首页',
+      // headerStyle: {
+      //   backgroundColor: '#fff'
+      // },
+      // headerTintColor: 'black',
+      // headerTitleStyle: {
+      //   fontWeight: 'bold'
+      // }
+    }
+  }
+
   // 左侧类别改变后操作
   handleTabChange(id, index) {
     this.setState({
@@ -120,8 +137,8 @@ const styles = StyleSheet.create({
     color: 'rgb(171, 149, 109)'
   },
   rightBox: {
-    flex: 4,
-    padding: 20
+    flex: 4
+    // padding: 20
   },
   cateItem: {
     // height: 30,
@@ -145,6 +162,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3
   },
   rightTopImg: {
-    height: 100
+    height: 100,
+    margin: 15
   }
 })

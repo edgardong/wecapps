@@ -1,21 +1,27 @@
 import React from 'react'
-import Home from '../pages/Home'
-import Product from '../pages/Product'
-import Category from '../pages/Category'
-
+import TabRouter from './tab'
+import Login from '../pages/Login'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: Home
+const AppNavigator = createStackNavigator(
+  {
+    Main: {
+      screen: TabRouter,
+      navigationOptions: ({ navigation }) => ({
+        // title: `${navigation.state.params.name}'s Profile'`
+        title: `首页`
+      })
+    },
+    Login: {
+      screen: Login,
+      navigationOptions: ({ navigation }) => ({
+        title: `登陆`
+      })
+    }
   },
-  Category:{
-    screen:Category
-  },
-  Product: {
-    screen: Product
-  },
-  initialRouteName: Home
-})
+  {
+    initialRouteName: 'Login'
+  }
+)
 
 export default createAppContainer(AppNavigator)
