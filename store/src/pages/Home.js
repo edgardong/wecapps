@@ -38,18 +38,17 @@ export default class Home extends Component {
 
   // 设置顶部导航栏的相关样式
   static navigationOptions = ({ navigation }) => {
-    const  params  = navigation.state
+    const params = navigation.state
     console.log('home.js...', params)
     return {
       title: '首页',
-      // title: params ? params.title : '首页',
-      // headerStyle: {
-      //   backgroundColor: '#fff'
-      // },
-      // headerTintColor: 'black',
-      // headerTitleStyle: {
-      //   fontWeight: 'bold'
-      // }
+      headerStyle: {
+        backgroundColor: '#fff'
+      },
+      headerTintColor: 'black',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      }
     }
   }
 

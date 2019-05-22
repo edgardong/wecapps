@@ -12,9 +12,10 @@ export default class My extends Component {
   // 设置顶部导航栏的相关样式
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state
-
+    console.log('...xxxx....', navigation)
     return {
-      tabBarLabel: '我的'
+      title: '我的',
+      headerTitle:'我的'
     }
   }
 
