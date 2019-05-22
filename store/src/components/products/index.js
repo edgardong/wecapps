@@ -7,12 +7,11 @@ export default class Products extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
   }
 
-  _onPressProduct(index) {
-    this.props.navigation.navigate('Product', {
-      id: this.props.products[index].id
+  _onPressProduct(id) {
+    this.props.navigation.push('Product', {
+      id
     })
   }
 
@@ -23,7 +22,7 @@ export default class Products extends Component {
           <TouchableOpacity
             activeOpacity={0.9}
             key={product.id}
-            onPress={() => this._onPressProduct(index)}
+            onPress={() => this._onPressProduct(product.id)}
             style={styles.productBox}
           >
             <Image

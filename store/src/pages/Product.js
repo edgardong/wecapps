@@ -23,18 +23,15 @@ export default class Product extends React.Component {
     }
   }
 
-  static navigationOptions = {
-    title: '商品详情',
-    headerStyle: {
-      backgroundColor: '#fff'
-    },
-    headerTintColor: 'black',
-    headerTitleStyle: {
-      fontWeight: 'bold'
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state
+
+    return {
+      title: '商品详情'
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.navigation.getParam('id')
     getProductDetail(id).then(resp => {
       this.setState({
@@ -63,7 +60,7 @@ export default class Product extends React.Component {
             source={require('../images/icon/carttop.png')}
           />
         </TouchableOpacity>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.topBox}>
             {/* 商品主图 */}
             <Image

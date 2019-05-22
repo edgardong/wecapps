@@ -10,7 +10,6 @@ import {
 } from 'react-native'
 import Swiper from '../components/swiper'
 import Products from '../components/products'
-import Category from './Category'
 
 export default class Home extends Component {
   constructor(props) {

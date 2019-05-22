@@ -12,7 +12,7 @@ export default class Cart extends Component {
     const { params } = navigation.state
 
     return {
-      tabBarLabel: '购物车',
+      title: '购物车',
       // title: params ? params.title : '首页',
       // headerStyle: {
       //   backgroundColor: '#fff'
