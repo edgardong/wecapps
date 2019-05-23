@@ -2,6 +2,7 @@ import React from 'react'
 import MainTabNavigator from './tab'
 import Login from '../pages/Login'
 import Product from '../pages/Product'
+import Loading from '../pages/Loading'
 import {
   createSwitchNavigator,
   createAppContainer,
@@ -13,4 +14,10 @@ const AppNavigator = createStackNavigator({
   Product: Product
 })
 
-export default createAppContainer(AppNavigator)
+const App = createSwitchNavigator({
+  AppLoding:Loading,
+  App: AppNavigator,
+  Login: Login
+})
+
+export default createAppContainer(App)

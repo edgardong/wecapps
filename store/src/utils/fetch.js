@@ -3,7 +3,8 @@ import {
 } from '../config'
 
 let headers = {
-  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Content-Type': 'application/json;charset=utf-8',
   'source': 'android',
   'token': ''
 }
@@ -60,7 +61,5 @@ const covertObjToKeyValue = (params) => {
       paramString += `${key}=${value}&`
     });
   }
-
-
   return paramString
 }
