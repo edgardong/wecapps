@@ -1,10 +1,8 @@
-import React, {
-  Component
-} from 'react'
+import React, { Component } from 'react'
 
-import {Text}  from 'react-native'
+import { Text } from 'react-native'
 
-export default class My extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props)
   }

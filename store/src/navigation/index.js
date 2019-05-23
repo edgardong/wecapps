@@ -15,8 +15,8 @@ const AppNavigator = createStackNavigator({
 })
 
 const App = createSwitchNavigator({
-  AppLoding:Loading,
   App: AppNavigator,
+  AppLoding:Loading,
   Login: Login
 })
 
