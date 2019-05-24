@@ -25,15 +25,7 @@ export default class Category extends React.Component {
     const { params } = navigation.state
 
     return {
-      title: '分类',
-      // title: params ? params.title : '首页',
-      // headerStyle: {
-      //   backgroundColor: '#fff'
-      // },
-      // headerTintColor: 'black',
-      // headerTitleStyle: {
-      //   fontWeight: 'bold'
-      // }
+      title: '分类'
     }
   }
 

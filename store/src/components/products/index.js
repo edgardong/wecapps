@@ -6,11 +6,10 @@ export default class Products extends Component {
     super(props)
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   _onPressProduct(id) {
-    this.props.navigation.push('Product', {
+    this.props.navigation.navigate('Product', {
       id
     })
   }

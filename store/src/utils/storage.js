@@ -21,7 +21,7 @@ class Storage {
    * @param {String} key 缓存的索引
    */
   getItemAsyc = key => {
-    return AsyncStorage.getItem(key, function(err, result) {
+    return AsyncStorage.getItem(key, function (err, result) {
       result
     })
   }
@@ -39,8 +39,8 @@ class Storage {
    * 移除某项缓存
    * @param {*} key 缓存索引
    */
-  removeItem = key => {
-    AsyncStorage.removeItem(key)
+  removeItem = async key => {
+    return await AsyncStorage.removeItem(key)
   }
 }
 

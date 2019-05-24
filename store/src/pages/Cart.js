@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text } from 'react-native'
-import { withNavigationFocus } from 'react-navigation'
+import { withNavigation, withNavigationFocus } from 'react-navigation'
 
 import Storage from '../utils/storage'
 
@@ -11,9 +11,11 @@ export default withNavigationFocus(
     }
 
     async componentDidUpdate() {
-      console.log('componentDidUpdate')
+      console.log('componentDidUpdate', this.props)
       if (this.props.isFocused) {
-        let user = await Storage.getItem('user')
+        console.log('props....')
+        let user = await Storage.getItem('token')
+        console.log(user)
         if(!user){
           this.props.navigation.navigate('Login')
         }

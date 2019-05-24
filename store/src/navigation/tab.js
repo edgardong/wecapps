@@ -114,12 +114,4 @@ let RootTabs = createBottomTabNavigator(
   }
 )
 
-RootTabs.navigationOptions = ({ navigation }) => {
-  console.log(navigation)
-
-  return {
-    header:null
-  }
-}
-
 export default RootTabs

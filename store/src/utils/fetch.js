@@ -20,14 +20,18 @@ const myFetch = async (apiUrl, method, data) => {
     method,
     headers: headers
   }
+
+  // console.log(data)
   if (method == 'GET') {
     apiUrl += covertObjToKeyValue(data)
   } else {
-    param.body = data || {}
+    param.body = JSON.stringify(data || {})
   }
-
+  // console.log(param)
   let request = new Request(BaseRequestUrl + apiUrl, param)
+  // console.log(request)
   const res = await fetch(request);
+  // console.log(res)
   return res.json();
 }
 

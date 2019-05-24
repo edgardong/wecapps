@@ -12,7 +12,6 @@ export default class Swiper extends Component {
   static interval = 0
 
   componentDidMount() {
-    console.log('this.props........', this.props)
 
     interval = setInterval(() => {
       let nextIndex = this.state.active + 1

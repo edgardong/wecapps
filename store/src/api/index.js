@@ -47,3 +47,19 @@ export const getCategoryType = () => {
 export const getProductsByCategory = (id) => {
   return get('product/by_category?id=' + id)
 }
+
+/**
+ * 用户登录接口
+ * @param {Object} data: { username 用户名 ,password 密码}
+ */
+export const login = (data) => {
+  return post('token/login', data)
+}
+
+/**
+ * 用户注册接口
+ * @param {Object} data: { username 用户名 ,password 密码}
+ */
+export const register = (data) => {
+  return post('token/register',data)
+}

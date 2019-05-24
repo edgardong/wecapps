@@ -3,6 +3,7 @@ import { getBanner, getTheme, getProducts } from '../api'
 import {
   View,
   TouchableOpacity,
+  BackHandler,
   Text,
   StyleSheet,
   Image,
@@ -12,8 +13,20 @@ import Swiper from '../components/swiper'
 import Products from '../components/products'
 
 export default class Home extends Component {
+  _didFocusSubscription
+  _willBlurSubscription
+
   constructor(props) {
     super(props)
+
+    this._didFocusSubscription = props.navigation.addListener(
+      'didFocus',
+      payload =>
+        BackHandler.addEventListener(
+          'hardwareBackPress',
+          this.onBackButtonPressAndroid
+        )
+    )
 
     this.state = {
       tabIndex: '0',
@@ -24,30 +37,10 @@ export default class Home extends Component {
     }
   }
 
-  // static navigationOptions = {
-  //   title: '首页',
-  //   headerStyle: {
-  //     backgroundColor: '#fff'
-  //   },
-  //   headerTintColor: 'black',
-  //   headerTitleStyle: {
-  //     fontWeight: 'bold'
-  //   }
-  // }
-
   // 设置顶部导航栏的相关样式
   static navigationOptions = ({ navigation }) => {
-    const params = navigation.state
-    console.log('home.js...', params)
     return {
-      title: '首页',
-      headerStyle: {
-        backgroundColor: '#fff'
-      },
-      headerTintColor: 'black',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      }
+      title: '首页'
     }
   }
 
@@ -79,6 +72,25 @@ export default class Home extends Component {
         products: resp
       })
     })
+
+    this._willBlurSubscription = this.props.navigation.addListener(
+      'willBlur',
+      payload =>
+        BackHandler.removeEventListener(
+          'hardwareBackPress',
+          this.onBackButtonPressAndroid
+        )
+    )
+  }
+
+  onBackButtonPressAndroid = () => {
+    console.log('我按了返回吧。。。')
+    return true
+  }
+
+  componentWillUnmount() {
+    this._didFocusSubscription && this._didFocusSubscription.remove()
+    this._willBlurSubscription && this._willBlurSubscription.remove()
   }
 
   /**

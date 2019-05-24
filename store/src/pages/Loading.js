@@ -48,7 +48,7 @@ export default class Loading extends Component {
           style={styles.btn}
           onPress={() => this.handleJump()}
         >
-          <Text style={styles.txt}>{this.state.time}s后跳过</Text>
+          <Text style={styles.txt}>{this.state.time}S后跳过</Text>
         </TouchableOpacity>
       </View>
     )
