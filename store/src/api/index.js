@@ -63,3 +63,11 @@ export const login = (data) => {
 export const register = (data) => {
   return post('token/register',data)
 }
+
+/**
+ * 获取主题下的产品
+ * @param {*} id 主题ID
+ */
+export const getThemeProducts= id=> {
+  return get(`theme/${id}`)
+}

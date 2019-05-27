@@ -113,6 +113,10 @@ export default class Home extends Component {
     this.props.navigation.navigate('Product', { id: item.key_word })
   }
 
+  handleThemeClick(item) {
+    this.props.navigation.navigate('Theme', { id: item.id, title: item.name })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -138,7 +142,9 @@ export default class Home extends Component {
             </View>
             <View style={styles.themeBox}>
               {this.state.themes.map((theme, index) => (
-                <View
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => this.handleThemeClick(theme)}
                   key={theme.id}
                   style={index == 2 ? styles.themeItemBig : styles.themeItem}
                 >
@@ -147,7 +153,7 @@ export default class Home extends Component {
                     source={{ uri: theme.topic_img.url }}
                     key={theme.id}
                   />
-                </View>
+                </TouchableOpacity>
               ))}
             </View>
           </View>
