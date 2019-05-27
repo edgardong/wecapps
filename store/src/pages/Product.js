@@ -21,9 +21,14 @@ export default withNavigationFocus(
       this.state = {
         product: null,
         productCounts: '1',
+        productIndex: 0,
+        showModal: false,
         tabIndex: 0,
         pickers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
       }
+
+      this.handleOk = this.handleOk.bind(this)
+      this.handleCancel = this.handleCancel.bind(this)
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -51,11 +56,42 @@ export default withNavigationFocus(
       })
     }
 
+    /**
+     * 添加数量
+     */
+    handleAddCount() {
+      this.setState({
+        showModal: true
+      })
+    }
+
+    handleCancel() {
+      this.setState({
+        showModal: false
+      })
+    }
+
+    handleOk(index, item) {
+      console.log('result', index, item)
+      console.log(this)
+      this.setState({
+        showModal: false,
+        productIndex: index,
+        productCounts: item
+      })
+    }
+
     render() {
       const product = this.state.product
       return product ? (
         <View style={styles.container}>
-          <WECPicker dataSource={this.state.pickers} />
+          <WECPicker
+            index={this.state.productIndex}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+            showModal={this.state.showModal}
+            dataSource={this.state.pickers}
+          />
           <TouchableOpacity style={styles.topCartBox}>
             <Image
               style={styles.topCart}
@@ -71,9 +107,13 @@ export default withNavigationFocus(
               />
               {/* 中部加入购物车区域 */}
               <View style={styles.cartBox}>
-                <View style={[styles.cartItem, styles.cartLeftItem]}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => this.handleAddCount()}
+                  style={[styles.cartItem, styles.cartLeftItem]}
+                >
                   <Text style={styles.colorWhite}>数量</Text>
-                  <Picker
+                  {/* <Picker
                     style={[{ height: 50, width: 80 }, styles.colorWhite]}
                     selectedValue={this.state.productCounts}
                     onValueChange={(itemValue, itemIndex) =>
@@ -88,17 +128,17 @@ export default withNavigationFocus(
                         value={pic}
                       />
                     ))}
-                  </Picker>
+                  </Picker> */}
 
-                  {/* <Text style={styles.colorWhite}>数量</Text>
-                <Text style={styles.colorWhite}>
-                  {this.state.productCounts}
-                </Text>
-                <Image
-                  style={styles.iconDown}
-                  source={require('../images/icon/arrowdown.png')}
-                /> */}
-                </View>
+                  {/* <Text style={styles.colorWhite}>数量</Text> */}
+                  <Text style={styles.colorWhite}>
+                    {this.state.productCounts}
+                  </Text>
+                  <Image
+                    style={styles.iconDown}
+                    source={require('../images/icon/arrowdown.png')}
+                  />
+                </TouchableOpacity>
                 <View style={[styles.cartItem, styles.cartRightItem]}>
                   <Text style={styles.colorWhite}>加入购物车</Text>
                   <Image
@@ -200,8 +240,8 @@ export default withNavigationFocus(
 )
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
+  container: {
+    flex: 1
   },
   topCartBox: {
     position: 'absolute',
