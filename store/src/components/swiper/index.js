@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Image, ImageBackground } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ImageBackground
+} from 'react-native'
 
 export default class Swiper extends Component {
   constructor(props) {
@@ -12,7 +18,6 @@ export default class Swiper extends Component {
   static interval = 0
 
   componentDidMount() {
-
     interval = setInterval(() => {
       let nextIndex = this.state.active + 1
       if (nextIndex >= this.props.items.length) {
@@ -40,12 +45,19 @@ export default class Swiper extends Component {
               this.state.active == index ? styles.active : styles.nomal
             ]}
           >
-            <Image
-              style={styles.image}
-              source={{
-                uri: item.img.url
-              }}
-            />
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                this.props.onClick(index, this.props.items[index])
+              }
+            >
+              <Image
+                style={styles.image}
+                source={{
+                  uri: item.img.url
+                }}
+              />
+            </TouchableOpacity>
           </View>
         ))}
 

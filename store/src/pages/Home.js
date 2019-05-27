@@ -19,6 +19,8 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
 
+    this.handleImageClick = this.handleImageClick.bind(this)
+
     this._didFocusSubscription = props.navigation.addListener(
       'didFocus',
       payload =>
@@ -106,6 +108,11 @@ export default class Home extends Component {
     this.props.navigation.setParams({ title: this.state.titles[index] })
   }
 
+  handleImageClick(index, item) {
+    console.log('点了图片', item, index)
+    this.props.navigation.navigate('Product', { id: item.key_word })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -117,7 +124,10 @@ export default class Home extends Component {
           {/* 顶部轮播图 */}
           <View>
             {this.state.banners.length > 0 ? (
-              <Swiper items={this.state.banners} />
+              <Swiper
+                onClick={this.handleImageClick}
+                items={this.state.banners}
+              />
             ) : null}
           </View>
 
