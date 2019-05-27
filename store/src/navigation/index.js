@@ -14,6 +14,20 @@ const AppNavigator = createStackNavigator({
   Product: ProductScreen
 })
 
+AppNavigator.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true
+  console.log('AppNavigator', navigation.state)
+  if (navigation.state.index > 0) {
+    tabBarVisible = false
+  }
+
+  console.log(tabBarVisible)
+
+  return {
+    tabBarVisible
+  }
+}
+
 const App = createSwitchNavigator({
   AppLoding: Loading,
   Login: Login,

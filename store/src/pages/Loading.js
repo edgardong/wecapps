@@ -12,7 +12,7 @@ export default class Loading extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      time: 5
+      time: 1
     }
   }
 

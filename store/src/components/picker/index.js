@@ -6,67 +6,119 @@ import {
   View,
   Text,
   StyleSheet,
+  Modal,
   Animated
 } from 'react-native'
 
 export default class Picker extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      showModal: true
+    }
   }
 
-  handleCancel() {}
+  handleCancel() {
+    this.setState({
+      showModal: false
+    })
+  }
 
-  handleSure() {}
+  handleSure() {
+    this.setState({
+      showModal: false
+    })
+  }
 
   render() {
     let key = this.props.key
     return (
-      <View style={styles.modal}>
-        <ScrollView style={styles.scrollBox}>
-          <View>
-            <TouchableOpacity
-              style={styles.btnCancel}
-              onPress={() => this.handleCancel()}
-            >
-              <Text>取消</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btnSure}
-              onPress={() => this.handleSure()}
-            >
-              <Text>确定</Text>
-            </TouchableOpacity>
-          </View>
-          {this.props.dataSource.map((data, index) => (
-            <View key={index}>
-              <Text>{key ? data[key] : data}</Text>
+      <View>
+        <Modal
+          visible={this.state.showModal}
+          transparent={false}
+          animationType="slide"
+        >
+          <View style={styles.modal}>
+            <View style={styles.scrollBox}>
+              <View style={styles.btns}>
+                <TouchableOpacity
+                  style={styles.btnCancel}
+                  onPress={() => this.handleCancel()}
+                >
+                  <Text>取消</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.btnSure}
+                  onPress={() => this.handleSure()}
+                >
+                  <Text style={{ color: 'rgb(171, 149, 109)' }}>确定</Text>
+                </TouchableOpacity>
+              </View>
+              <ScrollView
+                style={styles.scrollContent}
+                showsVerticalScrollIndicator={false}
+              >
+                {this.props.dataSource.map((data, index) => (
+                  <View key={index} style={styles.item}>
+                    <Text style={styles.itemText}>
+                      {key ? data[key] : data}
+                    </Text>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
-          ))}
-        </ScrollView>
+          </View>
+        </Modal>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1
+  },
+  btns: {
+    fontSize: 18,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ebebbe'
+  },
   btnCancel: {},
-  btnSure: {},
+  btnSure: {
+    color: 'rgb(171, 149, 109)'
+  },
   modal: {
+    height: '100%',
+    width: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
-    zIndex: 9999999
+    flex: 1
   },
   scrollBox: {
-    position: 'absolute',
-    height: 260,
+    height: 240,
     width: '100%',
-    backgroundColor: 'green',
+    position: 'absolute',
     bottom: 0,
-    zIndex: 9
+    flex: 1,
+    backgroundColor: 'white'
+  },
+  scrollContent: {},
+  item: {
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  itemText: {
+    fontSize: 16,
+    width: '100%',
+    textAlign: 'center'
   }
 })

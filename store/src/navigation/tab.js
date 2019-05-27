@@ -18,7 +18,6 @@ let HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = ({ navigation }) => ({
   tabBarLabel: '首页',
-  title: '首页',
   tabBarIcon: ({ focused, horizontal, tintColor }) => {
     return (
       <Image
@@ -83,7 +82,7 @@ let MyStack = createStackNavigator({
 })
 MyStack.navigationOptions = ({ navigation }) => ({
   tabBarLabel: '我的',
-  title: '我的',
+  // title: '我的',
   tabBarIcon: ({ focused, horizontal, tintColor }) => {
     return (
       <Image
@@ -109,9 +108,19 @@ let RootTabs = createBottomTabNavigator(
     initialRouteName: 'HomeStack',
     tabBarOptions: {
       activeTintColor: 'rgb(171, 149, 109)',
-      inactiveTintColor: '#989898'
+      inactiveTintColor: '#989898',
+      // inactiveBackgroundColor: 'lightblue',
+      // activeBackgroundColor: 'yellow',
+      // style: {
+      //   backgroundColor: 'blue'
+      // }
     }
   }
 )
+
+RootTabs.navigationOptions = {
+  // Hide the header from AppNavigator stack
+  header: null
+}
 
 export default RootTabs

@@ -27,8 +27,6 @@ export default withNavigationFocus(
     }
 
     static navigationOptions = ({ navigation }) => {
-      const params = navigation
-      console.log(params)
       return {
         title: '商品详情'
       }
@@ -56,7 +54,7 @@ export default withNavigationFocus(
     render() {
       const product = this.state.product
       return product ? (
-        <View>
+        <View style={styles.container}>
           <WECPicker dataSource={this.state.pickers} />
           <TouchableOpacity style={styles.topCartBox}>
             <Image
@@ -202,6 +200,9 @@ export default withNavigationFocus(
 )
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+  },
   topCartBox: {
     position: 'absolute',
     top: 0,
