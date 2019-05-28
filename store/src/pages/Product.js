@@ -21,6 +21,7 @@ export default withNavigationFocus(
       this.state = {
         product: null,
         productCounts: '1',
+        cartTotalCounts: 0,
         productIndex: 0,
         showModal: false,
         tabIndex: 0,
@@ -29,6 +30,7 @@ export default withNavigationFocus(
 
       this.handleOk = this.handleOk.bind(this)
       this.handleCancel = this.handleCancel.bind(this)
+      this.handleTabToCart = this.handleTabToCart.bind(this)
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -43,6 +45,23 @@ export default withNavigationFocus(
         this.setState({
           product: resp
         })
+      })
+
+      this._calTotalCount()
+    }
+
+    async _calTotalCount(data) {
+      if (!data) {
+        data = await Storage.getItem('cart')
+      }
+      let cartTotalCounts = 0
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].selectStatus) {
+          cartTotalCounts += data[i].counts
+        }
+      }
+      this.setState({
+        cartTotalCounts
       })
     }
 
@@ -81,6 +100,88 @@ export default withNavigationFocus(
       })
     }
 
+    /**
+     * 添加都购物车
+     * @param {*} product 商品
+     */
+    handleAddToCart(product) {
+      console.log(product)
+
+      let tmpObj = {}
+      let keys = ['id', 'name', 'main_img_url', 'price']
+
+      for (let key in product) {
+        if (keys.indexOf(key) >= 0) {
+          tmpObj[key] = product[key]
+        }
+      }
+
+      this.add(tmpObj, this.state.productCounts)
+    }
+
+    /*购物车中是否已经存在该商品*/
+    _isHasThatOne(id, arr) {
+      var item,
+        result = {
+          index: -1
+        }
+      for (let i = 0; i < arr.length; i++) {
+        item = arr[i]
+        if (item.id == id) {
+          result = {
+            index: i,
+            data: item
+          }
+          break
+        }
+      }
+      return result
+    }
+
+    /*
+     * 加入到购物车
+     * 如果之前没有样的商品，则直接添加一条新的记录， 数量为 counts
+     * 如果有，则只将相应数量 + counts
+     * @params:
+     * item - {obj} 商品对象,
+     * counts - {int} 商品数目,
+     * */
+    async add(item, counts) {
+      let cartData = await Storage.getItem('cart')
+
+      console.log('缓存里面数据，购物车', cartData)
+
+      if (!cartData) {
+        cartData = []
+      }
+      var isHadInfo = this._isHasThatOne(item.id, cartData)
+      //新商品
+      if (isHadInfo.index == -1) {
+        item.counts = Number(counts)
+        item.selectStatus = true //默认在购物车中为选中状态
+        cartData.push(item)
+      }
+      //已有商品
+      else {
+        let cartCount = Number(cartData[isHadInfo.index].counts)
+        console.log('cartCount>>>', cartCount)
+        cartData[isHadInfo.index].counts = cartCount + Number(counts)
+      }
+
+      // 计算购物车里的总数量
+      this._calTotalCount(cartData)
+      console.log('购物车里面的数据', cartData)
+
+      let data = await Storage.setItem('cart', cartData) //更新本地缓存
+      console.log('缓存数据的返回值', data)
+      return cartData
+    }
+
+    handleTabToCart() {
+      console.log('我要去购物车页面')
+      this.props.navigation.navigate('Cart')
+    }
+
     render() {
       const product = this.state.product
       return product ? (
@@ -92,11 +193,20 @@ export default withNavigationFocus(
             showModal={this.state.showModal}
             dataSource={this.state.pickers}
           />
-          <TouchableOpacity style={styles.topCartBox}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => this.handleTabToCart()}
+            style={styles.topCartBox}
+          >
             <Image
               style={styles.topCart}
               source={require('../images/icon/carttop.png')}
             />
+            {this.state.cartTotalCounts > 0 ? (
+              <Text style={styles.cartTotalCounts}>
+                {this.state.cartTotalCounts}
+              </Text>
+            ) : null}
           </TouchableOpacity>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.topBox}>
@@ -139,13 +249,17 @@ export default withNavigationFocus(
                     source={require('../images/icon/arrowdown.png')}
                   />
                 </TouchableOpacity>
-                <View style={[styles.cartItem, styles.cartRightItem]}>
+                <TouchableOpacity
+                  onPress={() => this.handleAddToCart(product)}
+                  activeOpacity={0.9}
+                  style={[styles.cartItem, styles.cartRightItem]}
+                >
                   <Text style={styles.colorWhite}>加入购物车</Text>
                   <Image
                     style={styles.iconCart}
                     source={require('../images/icon/cart.png')}
                   />
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.infoBox}>
@@ -247,8 +361,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
-    left: 0,
-    height: 32
+    width: 64,
+    height: 64,
+    zIndex: 1
   },
   topCart: {
     position: 'absolute',
@@ -256,6 +371,18 @@ const styles = StyleSheet.create({
     right: 16,
     width: 32,
     height: 32
+  },
+  cartTotalCounts: {
+    fontSize: 12,
+    backgroundColor: '#ab956d',
+    color: 'white',
+    position: 'absolute',
+    right: 45,
+    top: 12,
+    height: 18,
+    width: 18,
+    borderRadius: 18,
+    textAlign: 'center'
   },
   topBox: {
     alignItems: 'center',

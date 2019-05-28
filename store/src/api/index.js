@@ -61,13 +61,20 @@ export const login = (data) => {
  * @param {Object} data: { username 用户名 ,password 密码}
  */
 export const register = (data) => {
-  return post('token/register',data)
+  return post('token/register', data)
 }
 
 /**
  * 获取主题下的产品
  * @param {*} id 主题ID
  */
-export const getThemeProducts= id=> {
+export const getThemeProducts = id => {
   return get(`theme/${id}`)
+}
+
+/**
+ * 获取用户地址信息
+ */
+export const getAddress = () => {
+  return get(`address`)
 }

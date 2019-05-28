@@ -3,6 +3,7 @@ import MainTabNavigator from './tab'
 import Login from '../pages/Login'
 import ProductScreen from '../pages/Product'
 import ThemeScreen from '../pages/Theme'
+import OrderScreen from '../pages/Order'
 import Loading from '../pages/Loading'
 import {
   createSwitchNavigator,
@@ -13,19 +14,17 @@ import {
 const AppNavigator = createStackNavigator({
   Main: MainTabNavigator,
   Product: ProductScreen,
-  Theme: ThemeScreen
+  Theme: ThemeScreen,
+  Order: OrderScreen
 })
 
 AppNavigator.navigationOptions = ({
   navigation
 }) => {
   let tabBarVisible = true
-  console.log('AppNavigator', navigation.state)
   if (navigation.state.index > 0) {
     tabBarVisible = false
   }
-
-  console.log(tabBarVisible)
 
   return {
     tabBarVisible

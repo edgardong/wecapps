@@ -13,7 +13,15 @@ class Storage {
    * @param {*} key 缓存索引
    */
   getItem = async key => {
-    return await AsyncStorage.getItem(key)
+    let data = await AsyncStorage.getItem(key)
+    let result;
+    try {
+      result = JSON.parse(data)
+    } catch (error) {
+      result = data
+    }
+    return result;
+
   }
 
   /**
@@ -32,7 +40,10 @@ class Storage {
    * @param {*} value 缓存值
    */
   setItem = async (key, value) => {
-    await AsyncStorage.setItem(key, value)
+    if (typeof value != 'string') {
+      value = JSON.stringify(value)
+    }
+    return await AsyncStorage.setItem(key, value)
   }
 
   /**

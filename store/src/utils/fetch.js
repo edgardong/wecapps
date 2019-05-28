@@ -2,6 +2,8 @@ import {
   BaseRequestUrl
 } from '../config'
 
+import Storage from './storage'
+
 let headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json;charset=utf-8',
@@ -16,9 +18,13 @@ let headers = {
  * @param {*} data 请求参数
  */
 const myFetch = async (apiUrl, method, data) => {
+
+  let token = await Storage.getItem('token')
+  // console.log('token', token)
+  headers.token = token || ''
   let param = {
     method,
-    headers: headers
+    headers
   }
 
   // console.log(data)
