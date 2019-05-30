@@ -104,8 +104,6 @@ export default class Order extends React.Component {
       console.log('prepay', res)
       _this.aliPayAction(res, data)
     })
-
-    uploadLog('12345')
   }
 
   /**

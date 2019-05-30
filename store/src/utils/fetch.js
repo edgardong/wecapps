@@ -67,8 +67,8 @@ const covertObjToKeyValue = (params) => {
   let paramString = ''
   if (params) {
     paramString += '?'
-    params.keys.forEach(key => {
-      paramString += `${key}=${value}&`
+    Object.keys(params).forEach(key => {
+      paramString += `${key}=${params[key]}&`
     });
   }
   return paramString

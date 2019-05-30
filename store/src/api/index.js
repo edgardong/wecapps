@@ -110,3 +110,11 @@ export const uploadLog = (data) => {
 export const getOrderDetail = id => {
   return get(`order/${id}`)
 }
+
+/**
+ * 获取我的订单
+ * @param {Object} params 参数对象
+ */
+export const getMyOrders = params => {
+  return get(`order/by_user`, params)
+}
