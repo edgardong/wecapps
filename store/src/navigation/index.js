@@ -4,6 +4,7 @@ import Login from '../pages/Login'
 import ProductScreen from '../pages/Product'
 import ThemeScreen from '../pages/Theme'
 import OrderScreen from '../pages/Order'
+import PayResultScreen from '../pages/PayResult'
 import Loading from '../pages/Loading'
 import {
   createSwitchNavigator,
@@ -15,7 +16,8 @@ const AppNavigator = createStackNavigator({
   Main: MainTabNavigator,
   Product: ProductScreen,
   Theme: ThemeScreen,
-  Order: OrderScreen
+  Order: OrderScreen,
+  PayResult: PayResultScreen
 })
 
 AppNavigator.navigationOptions = ({

@@ -78,3 +78,35 @@ export const getThemeProducts = id => {
 export const getAddress = () => {
   return get(`address`)
 }
+
+/**
+ * 创建用户订单
+ * @param {*} data 
+ */
+export const createOrder = (data) => {
+  return post(`order`, data)
+}
+
+/**
+ * 用户预付款
+ * @param {*} data 
+ */
+export const prePay = (data) => {
+  return post(`pay/pre_order`, data)
+}
+
+/**
+ * 上传用户日志
+ * @param {*} data 
+ */
+export const uploadLog = (data) => {
+  return post(`common/log`, data)
+}
+
+/**
+ * 获取订单详情
+ * @param {*} id 
+ */
+export const getOrderDetail = id => {
+  return get(`order/${id}`)
+}

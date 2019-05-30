@@ -135,7 +135,10 @@ export default withNavigationFocus(
     }
 
     handleOrder() {
-      this.props.navigation.navigate('Order')
+      this.props.navigation.navigate('Order', {
+        from: 'cart',
+        account: this.state.account
+      })
     }
 
     render() {
