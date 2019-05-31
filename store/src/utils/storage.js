@@ -14,15 +14,12 @@ class Storage {
    */
   getItem = async key => {
     let data = await AsyncStorage.getItem(key)
-    console.log('data', data)
-    console.log('getItems.....', typeof data)
     let result;
     try {
       result = JSON.parse(data)
     } catch (error) {
       result = data
     }
-    console.log('result', result)
     return result;
   }
 

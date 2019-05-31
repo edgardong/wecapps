@@ -230,10 +230,41 @@ export default class Order extends React.Component {
     }
   }
 
+  handleEditAddress(){
+
+  }
+  
   render() {
     const address = this.state.address
+    const basicInfo = this.state.basicInfo
     return (
       <View style={styles.container}>
+        {basicInfo ? (
+          <View style={styles.orderBasicBox}>
+            <View style={styles.orderBasicLeft}>
+              <View style={styles.basicItem}>
+                <Text style={styles.basicItemKey}>下单时间：</Text>
+                <Text style={styles.basicItemValue}>{basicInfo.orderTime}</Text>
+              </View>
+              <View style={styles.basicItem}>
+                <Text style={styles.basicItemKey}>订单编号：</Text>
+                <Text style={styles.basicItemValue}>{basicInfo.orderNo}</Text>
+              </View>
+            </View>
+            <View style={styles.orderBasicRight}>
+              {this.state.orderStatus == 1 ? (
+                <Text style={styles.unpay}>待付款</Text>
+              ) : null}
+              {this.state.orderStatus == 2 ? (
+                <Text style={styles.payed}>已付款</Text>
+              ) : null}
+              {this.state.orderStatus == 3 ? (
+                <Text style={styles.done}>已发货</Text>
+              ) : null}
+            </View>
+          </View>
+        ) : null}
+
         {address ? (
           <View style={styles.addressBox}>
             <View style={styles.leftBox}>
@@ -259,12 +290,16 @@ export default class Order extends React.Component {
                 }`}</Text>
               </View>
             </View>
-            <View style={styles.rightArrow}>
-              <Image
-                source={require('../images/icon/arrowright.png')}
-                style={styles.rightArrowImg}
-              />
-            </View>
+            {this.state.orderStatus <= 1 ? (
+              <View style={styles.rightArrow}>
+                <TouchableOpacity activeOpacity={0.9} onPress={()=>this.handleEditAddress()}>
+                <Image
+                  source={require('../images/icon/arrowright.png')}
+                  style={styles.rightArrowImg}
+                />
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         ) : null}
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -292,13 +327,15 @@ export default class Order extends React.Component {
           <View style={styles.accountInfo}>
             <Text style={styles.account}>付款合计：￥{this.state.account}</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => this.handlePay()}
-            style={styles.payBtn}
-            activeOpacity={0.9}
-          >
-            <Text style={styles.payText}>去付款</Text>
-          </TouchableOpacity>
+          {this.state.orderStatus <= 1 ? (
+            <TouchableOpacity
+              onPress={() => this.handlePay()}
+              style={styles.payBtn}
+              activeOpacity={0.9}
+            >
+              <Text style={styles.payText}>去付款</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
       </View>
     )
@@ -309,6 +346,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4'
+  },
+  orderBasicBox: {
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    borderBottomColor: '#e9e9e9',
+    paddingTop: 10,
+    paddingBottom: 2,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  orderBasicLeft: {
+    flex: 1
+  },
+  orderBasicRight: {
+    width: 60,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  basicItem: {
+    flexDirection: 'row',
+    paddingBottom: 8
+  },
+  unpay: {
+    color: '#B42F2D'
+  },
+  payed: {
+    color: '#AB956D'
+  },
+  done: {
+    color: '#57AB53'
   },
   addressBox: {
     marginBottom: 10,

@@ -6,6 +6,7 @@ import ThemeScreen from '../pages/Theme'
 import OrderScreen from '../pages/Order'
 import PayResultScreen from '../pages/PayResult'
 import Loading from '../pages/Loading'
+import AddressScreen from '../pages/Address'
 import {
   createSwitchNavigator,
   createAppContainer,
@@ -17,25 +18,38 @@ const AppNavigator = createStackNavigator({
   Product: ProductScreen,
   Theme: ThemeScreen,
   Order: OrderScreen,
-  PayResult: PayResultScreen
+  PayResult: PayResultScreen,
+  Address: AddressScreen
 })
 
-AppNavigator.navigationOptions = ({
-  navigation
-}) => {
-  let tabBarVisible = true
-  if (navigation.state.index > 0) {
-    tabBarVisible = false
-  }
+// AppNavigator.navigationOptions = ({
+//   navigation
+// }) => {
+//   let tabBarVisible = true
+//   if (navigation.state.index > 0) {
+//     tabBarVisible = false
+//   }
 
-  return {
-    tabBarVisible
-  }
-}
+//   return {
+//     tabBarVisible
+//   }
+// }
+
+const LoginStack = createStackNavigator({
+  Login: Login
+})
+
+// LoginStack.navigationOptions = ({
+//   navigation
+// }) => {
+//   return {
+//     title: '登录'
+//   }
+// }
 
 const App = createSwitchNavigator({
   AppLoding: Loading,
-  Login: Login,
+  Login: LoginStack,
   App: AppNavigator
 })
 

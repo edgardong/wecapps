@@ -165,6 +165,13 @@ export default class My extends Component {
       })
   }
 
+  handleViewOrder(order) {
+    this.props.navigation.navigate('Order', {
+      id: order.id,
+      from: 'my'
+    })
+  }
+
   handleScrollEnd(e) {
     // console.log(e.nativeEvent)
 
@@ -223,43 +230,48 @@ export default class My extends Component {
               </View>
               {this.state.orders.map((order, index) => (
                 <View style={styles.orderItem} key={index}>
-                  <View style={styles.itemTopBox}>
-                    <Text>订单编号：</Text>
-                    <Text>{order.order_no}</Text>
-                  </View>
-                  <View style={styles.itemMiddleBox}>
-                    <Image
-                      style={styles.middleImage}
-                      source={{ uri: order.snap_img }}
-                    />
-                    <View style={styles.middleContent}>
-                      <Text>{order.snap_name}</Text>
-                      <Text>{order.total_count}件商品</Text>
+                  <TouchableOpacity
+                    onPress={() => this.handleViewOrder(order)}
+                    activeOpacity={0.9}
+                  >
+                    <View style={styles.itemTopBox}>
+                      <Text>订单编号：</Text>
+                      <Text>{order.order_no}</Text>
                     </View>
-                    <View style={styles.middleStatus}>
-                      {order.status == 1 ? (
-                        <Text style={styles.unpay}>待付款</Text>
-                      ) : null}
-                      {order.status == 2 ? (
-                        <Text style={styles.payed}>已付款</Text>
-                      ) : null}
-                      {order.status == 3 ? (
-                        <Text style={styles.done}>已发货</Text>
-                      ) : null}
+                    <View style={styles.itemMiddleBox}>
+                      <Image
+                        style={styles.middleImage}
+                        source={{ uri: order.snap_img }}
+                      />
+                      <View style={styles.middleContent}>
+                        <Text>{order.snap_name}</Text>
+                        <Text>{order.total_count}件商品</Text>
+                      </View>
+                      <View style={styles.middleStatus}>
+                        {order.status == 1 ? (
+                          <Text style={styles.unpay}>待付款</Text>
+                        ) : null}
+                        {order.status == 2 ? (
+                          <Text style={styles.payed}>已付款</Text>
+                        ) : null}
+                        {order.status == 3 ? (
+                          <Text style={styles.done}>已发货</Text>
+                        ) : null}
+                      </View>
                     </View>
-                  </View>
-                  {order.status == 1 ? (
-                    <View style={styles.itemBottomBox}>
-                      <Text>实付:￥{order.total_price}</Text>
-                      <TouchableOpacity
-                        style={styles.btnPay}
-                        activeOpacity={0.9}
-                        onPress={() => this.handlePay(order)}
-                      >
-                        <Text style={styles.btnPayTxt}>付款</Text>
-                      </TouchableOpacity>
-                    </View>
-                  ) : null}
+                    {order.status == 1 ? (
+                      <View style={styles.itemBottomBox}>
+                        <Text>实付:￥{order.total_price}</Text>
+                        <TouchableOpacity
+                          style={styles.btnPay}
+                          activeOpacity={0.9}
+                          onPress={() => this.handlePay(order)}
+                        >
+                          <Text style={styles.btnPayTxt}>付款</Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : null}
+                  </TouchableOpacity>
                 </View>
               ))}
             </View>
@@ -267,7 +279,11 @@ export default class My extends Component {
         </ScrollView>
 
         <View>
-          <Button title={'清除缓存'} onPress={() => this.handleClearCache()} />
+          <Button
+            color={'rgb(171, 149, 109)'}
+            title={'退出登录'}
+            onPress={() => this.handleClearCache()}
+          />
         </View>
       </View>
     )
