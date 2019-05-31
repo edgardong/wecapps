@@ -118,3 +118,18 @@ export const getOrderDetail = id => {
 export const getMyOrders = params => {
   return get(`order/by_user`, params)
 }
+
+/**
+ * 获取子级目录的区域
+ * @param {*} id 
+ */
+export const getAreaList = id => {
+  return get(`area/list${id?'id='+id:''}`)
+}
+
+/**
+ * 获取所有的区域
+ */
+export const getAllArea = () => {
+  return get(`area/all`)
+}

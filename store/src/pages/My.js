@@ -38,10 +38,10 @@ export default class My extends Component {
       console.log('我的订单数据', orders)
       let orderList = []
       if (this.state.params.page == 1) {
-        orderList = orders.data.data
+        orderList = orders.data.data || []
       } else {
         orderList = this.state.orders
-        orderList.push.apply(orderList, orders.data.data)
+        orderList.push.apply(orderList, orders.data.data || [])
       }
       _this.setState({
         orders: orderList,
@@ -62,7 +62,7 @@ export default class My extends Component {
       getAddress().then(res => {
         console.log('用户地址信息', res)
         _this.setState({
-          address: res
+          address: res.data
         })
       })
       _this._loadOrderData()
@@ -192,6 +192,13 @@ export default class My extends Component {
     }
   }
 
+  /**
+   * 编辑地址
+   */
+  handleEditAddress() {
+    this.props.navigation.navigate('Address')
+  }
+
   render() {
     const address = this.state.address
     return (
@@ -221,7 +228,15 @@ export default class My extends Component {
                 </Text>
               </View>
             </View>
-          ) : null}
+          ) : (
+            <TouchableOpacity
+              style={styles.title}
+              activeOpacity={0.9}
+              onPress={() => this.handleEditAddress()}
+            >
+              <Text style={styles.titleText}>添加地址+</Text>
+            </TouchableOpacity>
+          )}
 
           {this.state.orders.length > 0 ? (
             <View>

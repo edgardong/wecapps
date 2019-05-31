@@ -230,10 +230,13 @@ export default class Order extends React.Component {
     }
   }
 
+  /**
+   * 处理地址选择
+   */
   handleEditAddress(){
-
+    this.props.navigation.navigate('Address')
   }
-  
+
   render() {
     const address = this.state.address
     const basicInfo = this.state.basicInfo

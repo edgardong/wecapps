@@ -24,7 +24,8 @@ const myFetch = async (apiUrl, method, data) => {
   headers.token = token || ''
   let param = {
     method,
-    headers
+    headers,
+    timeout: 30
   }
 
   // console.log(data)
@@ -37,7 +38,7 @@ const myFetch = async (apiUrl, method, data) => {
   let request = new Request(BaseRequestUrl + apiUrl, param)
   // console.log(request)
   const res = await fetch(request);
-  // console.log(res)
+  console.log('接口的返回值', res)
   return res.json();
 }
 
