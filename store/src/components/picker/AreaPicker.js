@@ -151,7 +151,7 @@ export default class AreaPicker extends Component {
     // console.log('最终当前应该显示的是', currentIndex)
 
     console.log('hahahahahh,', cityIndex)
-    let countryList = this.state.cityList[cityIndex].subList
+    let countryList = this.state.cityList[cityIndex].subList || []
     this.setState({
       countryList,
       cityIndex
@@ -230,8 +230,8 @@ export default class AreaPicker extends Component {
    * @param {*} currentIndex 当前省份的索引
    */
   handleScrollContent(currentIndex) {
-    let cityList = this.props.dataSource[currentIndex].subList
-    let countryList = cityList[0].subList
+    let cityList = this.props.dataSource[currentIndex].subList || []
+    let countryList = cityList.length > 0 ? cityList[0].subList || [] : []
 
     this.setState({
       currentIndex,
