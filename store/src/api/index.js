@@ -80,6 +80,14 @@ export const getAddress = () => {
 }
 
 /**
+ * 保存用户地址信息
+ * @param {*} data 用户地址信息
+ */
+export const saveAddress = (data) => {
+  return post(`address`,data)
+}
+
+/**
  * 创建用户订单
  * @param {*} data 
  */

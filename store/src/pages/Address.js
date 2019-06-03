@@ -5,13 +5,14 @@ import {
   StyleSheet,
   Text,
   Image,
+  Button,
   ScrollView,
   TextInput,
   TouchableOpacity
 } from 'react-native'
 
 import Storage from '../utils/storage'
-import { getAllArea } from '../api'
+import { getAllArea, saveAddress } from '../api'
 import AreaPicker from '../components/picker/AreaPicker'
 export default class Address extends React.Component {
   constructor(props) {
@@ -19,12 +20,18 @@ export default class Address extends React.Component {
     this.state = {
       areas: null,
       province: '',
+      name: '',
+      mobile: '',
       city: '',
       country: '',
       detail: '',
       showPicker: false,
-      default: ['', '', '']
+      default: null,
+      height_comments: 40
     }
+
+    this.handleOk = this.handleOk.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -57,6 +64,12 @@ export default class Address extends React.Component {
         areas: areas
       })
     }
+
+    // 显示默认
+    let params = this.props.navigation.state.params
+    this.setState({
+      
+    })
   }
 
   handleChooseArea() {
@@ -64,11 +77,49 @@ export default class Address extends React.Component {
       showPicker: true
     })
   }
-  handleOk(index, item) {}
+  handleOk(area) {
+    console.log('....Ok....', area)
+
+    this.setState({
+      showPicker: false,
+      province: area.province.areaName,
+      city: area.city.areaName,
+      country: area.country.areaName,
+      default: [
+        area.province.areaName,
+        area.city.areaName,
+        area.country.areaName
+      ]
+    })
+  }
 
   handleCancel() {
     this.setState({
       showPicker: false
+    })
+  }
+
+  onContentSizeChange(event) {
+    this.setState({
+      height_comments: event.nativeEvent.contentSize.height
+    })
+  }
+
+  /**
+   * 保存地址
+   */
+  handleSaveAddress() {
+    let data = {
+      mobile: this.state.mobile,
+      name: this.state.name,
+      province: this.state.province,
+      city: this.state.city,
+      country: this.state.country,
+      detail: this.state.detail
+    }
+    saveAddress(data).then(resp => {
+      console.log('保存地址成功', resp)
+      this.props.navigation.goBack()
     })
   }
 
@@ -77,18 +128,39 @@ export default class Address extends React.Component {
       <View style={styles.container}>
         <AreaPicker
           index={this.state.default}
-          onOk={() => this.handleOk()}
-          onCancel={() => this.handleCancel()}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
           dataSource={this.state.areas}
           showModal={this.state.showPicker}
+        />
+
+        <TextInput
+          style={{
+            borderColor: '#ebebeb',
+            borderWidth: 1
+          }}
+          placeholder="请输入联系人"
+          onChangeText={name => this.setState({ name })}
+          value={this.state.name}
+        />
+
+        <TextInput
+          style={{
+            borderColor: '#ebebeb',
+            borderWidth: 1
+          }}
+          placeholder="请输入联系方式"
+          onChangeText={mobile => this.setState({ mobile })}
+          value={this.state.mobile}
         />
 
         <TouchableOpacity
           activeOpacity={0.9}
           style={{
-            height: 40,
+            height: 50,
+            paddingRight: 20,
             alignItems: 'center',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             flexDirection: 'row'
           }}
           onPress={() => this.handleChooseArea()}
@@ -101,15 +173,24 @@ export default class Address extends React.Component {
 
         <TextInput
           style={{
-            height: 80,
+            height: Math.max(40, this.state.height_comments),
             borderColor: '#ebebeb',
             borderWidth: 1
           }}
           multiline={true}
           placeholder="请输入详细地址"
+          onContentSizeChange={this.onContentSizeChange.bind(this)}
           onChangeText={detail => this.setState({ detail })}
           value={this.state.detail}
         />
+
+        <View style={{ marginTop: 30, marginLeft: 30, marginRight: 30 }}>
+          <Button
+            color={'rgb(171, 149, 109)'}
+            title={'保存'}
+            onPress={() => this.handleSaveAddress()}
+          />
+        </View>
       </View>
     )
   }

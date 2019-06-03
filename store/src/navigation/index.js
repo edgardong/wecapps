@@ -7,6 +7,7 @@ import OrderScreen from '../pages/Order'
 import PayResultScreen from '../pages/PayResult'
 import Loading from '../pages/Loading'
 import AddressScreen from '../pages/Address'
+
 import {
   createSwitchNavigator,
   createAppContainer,

@@ -16,7 +16,7 @@ export default class AreaPicker extends Component {
 
     this.state = {
       needUpdate: true,
-      currentIndex: props.index[0] || 0,
+      currentIndex: 0,
       cityList: [],
       cityIndex: 0,
       countryList: [],
@@ -37,33 +37,15 @@ export default class AreaPicker extends Component {
     this.props.onCancel()
   }
 
-  componentDidUpdate() {
-    if (this.update && this.state.currentIndex !== this.props.index) {
-      this.setState({
-        currentIndex: this.props.index
-      })
-    }
-
-    let _this = this
-    if (this.refs.scrollBox && this.props.showModal && this.update) {
-      setTimeout(() => {
-        this.refs.scrollBox.scrollTo({
-          x: 0,
-          y: _this.props.index * 40
-        })
-        this.update = false
-      }, 0)
-    }
-  }
-
   handleSure() {
     // console.log(this.props)
     let _this = this
     this.update = true
-    this.props.onOk(
-      _this.state.currentIndex,
-      _this.props.dataSource[_this.state.currentIndex]
-    )
+    this.props.onOk({
+      province: _this.props.dataSource[_this.state.currentIndex],
+      city: _this.state.cityList[_this.state.cityIndex],
+      country: _this.state.countryList[_this.state.countryIndex]
+    })
   }
 
   // 开始滚动
@@ -263,9 +245,9 @@ export default class AreaPicker extends Component {
     }, 20)
   }
 
-  render() {
-    let key = this.props.key
-    console.log('..走到这里来了？', this.props, this.state)
+  handleShowModal() {
+    console.log('this.handleShowModal', this.props)
+
     if (this.props.dataSource) {
       if (this.state.cityList.length <= 0) {
         let currentIndex = 0
@@ -280,9 +262,81 @@ export default class AreaPicker extends Component {
       }
     }
 
+    if (this.update && this.props.index) {
+      let cityText = this.props.index[1]
+      let countryText = this.props.index[2]
+
+      let currentIndex = this.props.dataSource.findIndex(
+        item => item.areaName == this.props.index[0]
+      )
+
+      console.log('currentIndex', currentIndex, this.props.index)
+      // 城市的列表
+      let cityList = this.props.dataSource[currentIndex].subList || []
+      // 获取城市的索引
+      let cityIndex = 0
+
+      cityIndex =
+        cityList.length > 0
+          ? cityText
+            ? cityList.findIndex(city => city.areaName == cityText)
+            : 0
+          : 0
+
+      let countryList =
+        cityList.length > 0 ? cityList[cityIndex].subList || [] : []
+
+      let countryIndex = 0
+      countryIndex =
+        cityList.length > 0
+          ? countryText
+            ? countryList.findIndex(country => country.areaName == countryText)
+            : 0
+          : 0
+
+      this.setState({
+        currentIndex,
+        cityList,
+        countryList,
+        cityIndex,
+        countryIndex
+      })
+
+      this.refs.scrollBox.scrollTo({
+        x: 0,
+        y: currentIndex * 40
+      })
+
+      this.refs.cityScrollBox.scrollTo({
+        x: 0,
+        y: cityIndex * 40
+      })
+
+      this.refs.countryScrollBox.scrollTo({
+        x: 0,
+        y: countryIndex * 40
+      })
+    }
+
+    // let _this = this
+    // if (this.refs.scrollBox && this.props.showModal && this.update) {
+    //   setTimeout(() => {
+    //     this.refs.scrollBox.scrollTo({
+    //       x: 0,
+    //       y: _this.props.index * 40
+    //     })
+    //     this.update = false
+    //   }, 0)
+    // }
+  }
+
+  render() {
+    let key = this.props.key
+
     return (
       <View>
         <Modal
+          onShow={() => this.handleShowModal()}
           visible={this.props.showModal}
           transparent={true}
           animationType="slide"

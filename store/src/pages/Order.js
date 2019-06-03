@@ -49,6 +49,7 @@ export default class Order extends React.Component {
             orderStatus: resp.status,
             productArr: resp.snap_items,
             account: resp.total_price,
+            address: resp.snap_address,
             basicInfo: {
               orderTime: resp.create_time,
               orderNo: resp.order_no
@@ -57,13 +58,13 @@ export default class Order extends React.Component {
         })
       }
     })
-    console.log('....order.....')
-    getAddress().then(resp => {
-      console.log('address', resp)
-      this.setState({
-        address: resp
-      })
-    })
+    // console.log('....order.....')
+    // getAddress().then(resp => {
+    //   console.log('address', resp)
+    //   this.setState({
+    //     address: resp
+    //   })
+    // })
   }
 
   /**
@@ -233,8 +234,8 @@ export default class Order extends React.Component {
   /**
    * 处理地址选择
    */
-  handleEditAddress(){
-    this.props.navigation.navigate('Address')
+  handleEditAddress() {
+    this.props.navigation.navigate('Address', { address: this.state.address })
   }
 
   render() {
@@ -295,11 +296,14 @@ export default class Order extends React.Component {
             </View>
             {this.state.orderStatus <= 1 ? (
               <View style={styles.rightArrow}>
-                <TouchableOpacity activeOpacity={0.9} onPress={()=>this.handleEditAddress()}>
-                <Image
-                  source={require('../images/icon/arrowright.png')}
-                  style={styles.rightArrowImg}
-                />
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  // onPress={() => this.handleEditAddress()}
+                >
+                  {/* <Image
+                    source={require('../images/icon/arrowright.png')}
+                    style={styles.rightArrowImg}
+                  /> */}
                 </TouchableOpacity>
               </View>
             ) : null}

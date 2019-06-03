@@ -12,6 +12,8 @@ import {
 import Swiper from '../components/swiper'
 import Products from '../components/products'
 
+import Update from '../utils/update'
+
 export default class Home extends Component {
   _didFocusSubscription
   _willBlurSubscription
@@ -120,7 +122,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* {this.state.tabIndex == 0 ? ( */}
+        <Update />
         <ScrollView
           style={styles.scrollContainer}
           showsVerticalScrollIndicator={false}
