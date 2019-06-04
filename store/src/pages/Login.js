@@ -37,13 +37,10 @@ export default class Login extends Component {
     let _this = this
     let data = {
       username: this.state.username,
-      // password: this.state.password
       password: Md5.hex_md5(this.state.password)
     }
-    console.log('login....', data)
     login(data)
       .then(resp => {
-        console.log(resp)
         Storage.setItem('token', resp.token)
         _this.props.navigation.navigate('App')
       })
@@ -83,10 +80,8 @@ export default class Login extends Component {
         // password: this.state.password
         password: Md5.hex_md5(this.state.password)
       }
-      console.log('login....', data)
       register(data)
         .then(resp => {
-          console.log(resp)
           _this.setState({
             login: true
           })

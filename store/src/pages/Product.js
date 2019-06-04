@@ -90,9 +90,12 @@ export default withNavigationFocus(
       })
     }
 
+    /**
+     * 成功处理事件
+     * @param {*} index 索引
+     * @param {*} item 
+     */
     handleOk(index, item) {
-      console.log('result', index, item)
-      console.log(this)
       this.setState({
         showModal: false,
         productIndex: index,
@@ -338,11 +341,15 @@ export default withNavigationFocus(
                   <View key={index} style={styles.propertiyItem}>
                     <Text style={styles.propertyName}>{pro.name}</Text>
                     <Text style={styles.propertyDetail}>{pro.detail}</Text>
+                    {index == product.properties.length - 1 ? (
+                      <View style={{ height: 100 }} />
+                    ) : null}
                   </View>
                 ))
               ) : this.state.tabIndex == 2 ? (
                 <View>
                   <Text style={{ textAlign: 'center' }}>七天无理由退款</Text>
+                  <View style={{ height: 100 }} />
                 </View>
               ) : null}
             </View>

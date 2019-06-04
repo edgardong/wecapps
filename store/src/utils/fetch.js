@@ -20,7 +20,6 @@ let headers = {
 const myFetch = async (apiUrl, method, data) => {
 
   let token = await Storage.getItem('token')
-  // console.log('token', token)
   headers.token = token || ''
   let param = {
     method,
@@ -28,13 +27,11 @@ const myFetch = async (apiUrl, method, data) => {
     timeout: 30
   }
 
-  // console.log(data)
   if (method == 'GET') {
     apiUrl += covertObjToKeyValue(data)
   } else {
     param.body = JSON.stringify(data || {})
   }
-  // console.log(param)
   let request = new Request(BaseRequestUrl + apiUrl, param)
   // console.log(request)
   const res = await fetch(request);

@@ -7,7 +7,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native'
 import Swiper from '../components/swiper'
 import Products from '../components/products'
@@ -64,14 +65,12 @@ export default class Home extends Component {
       })
 
     getTheme().then(resp => {
-      console.log(resp)
       _this.setState({
         themes: resp
       })
     })
 
     getProducts().then(resp => {
-      console.log(resp)
       _this.setState({
         products: resp
       })
@@ -88,7 +87,20 @@ export default class Home extends Component {
   }
 
   onBackButtonPressAndroid = () => {
-    console.log('我按了返回吧。。。')
+    Alert.alert('提示', '是否确定退出APP？', [
+      {
+        text: '是',
+        onPress: () => {
+          // 退出APP
+          BackHandler.exitApp()
+        }
+      },
+      {
+        text: '否',
+        onPress: () => true,
+        style: 'cancel'
+      }
+    ])
     return true
   }
 
@@ -111,7 +123,6 @@ export default class Home extends Component {
   }
 
   handleImageClick(index, item) {
-    console.log('点了图片', item, index)
     this.props.navigation.navigate('Product', { id: item.key_word })
   }
 
@@ -173,105 +184,6 @@ export default class Home extends Component {
             ) : null}
           </View>
         </ScrollView>
-        {/*  ) : null} */}
-
-        {/* {this.state.tabIndex == 1 ? (
-          <Category navigation={this.props.navigation} />
-        ) : null} */}
-
-        {/* 底部导航栏部分 */}
-        {/* <View style={styles.footer}>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.footerItem}
-            onPress={() => this.handleTabChange('0')}
-          >
-            <Image
-              style={styles.tabIcon}
-              source={
-                this.state.tabIndex != 0
-                  ? require('../images/toolbar/home.png')
-                  : require('../images/toolbar/homeselected.png')
-              }
-            />
-            <Text
-              style={{
-                color:
-                  this.state.tabIndex != '0' ? '#989898' : 'rgb(171, 149, 109)'
-              }}
-            >
-              主页
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.footerItem}
-            onPress={() => this.handleTabChange('1')}
-          >
-            <Image
-              style={styles.tabIcon}
-              source={
-                this.state.tabIndex != 1
-                  ? require('../images/toolbar/category.png')
-                  : require('../images/toolbar/categoryselected.png')
-              }
-            />
-            <Text
-              style={{
-                color:
-                  this.state.tabIndex != '1' ? '#989898' : 'rgb(171, 149, 109)'
-              }}
-            >
-              分类
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.footerItem}
-            onPress={() => this.handleTabChange('2')}
-          >
-            <Image
-              style={styles.tabIcon}
-              source={
-                this.state.tabIndex != 2
-                  ? require('../images/toolbar/cart.png')
-                  : require('../images/toolbar/cartselected.png')
-              }
-            />
-            <Text
-              style={{
-                color:
-                  this.state.tabIndex != '2' ? '#989898' : 'rgb(171, 149, 109)'
-              }}
-            >
-              购物车
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.footerItem}
-            onPress={() => this.handleTabChange('3')}
-          >
-            <Image
-              style={styles.tabIcon}
-              source={
-                this.state.tabIndex != '3'
-                  ? require('../images/toolbar/my.png')
-                  : require('../images/toolbar/myselected.png')
-              }
-            />
-            <Text
-              style={{
-                color:
-                  this.state.tabIndex != 3 ? '#989898' : 'rgb(171, 149, 109)'
-              }}
-            >
-              我的
-            </Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
     )
   }
