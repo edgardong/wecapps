@@ -14,7 +14,7 @@
     "react-native": "0.59.8",
     "react-native-gesture-handler": "^1.2.1",
     "react-native-md5": "^1.0.0",
-    "react-native-update": "^5.1.8",
+    "react-native-update": "^5.10.1",
     "react-navigation": "^3.11.0"
   },
   "devDependencies": {
